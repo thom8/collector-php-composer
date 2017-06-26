@@ -1,0 +1,13 @@
+{
+    "dependencies": [
+        {
+            "name": "monolog/monolog",
+            "source": "composer",
+            "path": "/",
+            "installed": {
+                "version": "1.0.2"
+            },
+            "available": []
+        }
+    ]
+}

@@ -44,4 +44,4 @@ foreach ($installed['installed'] as $package) {
 
 // send the final output to stdout so dependencies.io can pick it up
 $final_output = json_encode(array('dependencies' => $collected));
-echo('BEGIN_DEPENDENCIES_SCHEMA_OUTPUT>' . $final_output . '<END_DEPENDENCIES_SCHEMA_OUTPUT');
+echo('BEGIN_DEPENDENCIES_SCHEMA_OUTPUT>' . $final_output . '<END_DEPENDENCIES_SCHEMA_OUTPUT\n');

@@ -17,7 +17,7 @@ that uses `composer install` to collect php dependencies.
 ```yaml
 collectors:
 - type: php-composer
-  path: /  # path with composer.json (and optionally composer.lock)
+  path: /  # path with composer.json (and composer.lock)
   actors:
   - ...
 ```

@@ -8,7 +8,7 @@
 
 A [dependencies.io](https://www.dependencies.io)
 [collector](https://www.dependencies.io/docs/collectors/)
-uses `composer install` to collect php dependencies.
+that uses `composer install` to collect php dependencies.
 
 ## Usage
 

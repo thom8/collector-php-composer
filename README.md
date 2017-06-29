@@ -24,6 +24,7 @@ collectors:
 
 ### Works well with
 
+- [php-composer actor](https://www.dependencies.io/docs/actors/php-composer/) ([GitHub repo](https://github.com/dependencies-io/actor-php-composer/))
 - [repo-issue actor](https://www.dependencies.io/docs/actors/repo-issue/) ([GitHub repo](https://github.com/dependencies-io/actor-repo-issue/))
 
 

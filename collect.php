@@ -33,7 +33,7 @@ foreach ($installed['installed'] as $package) {
 
     $schema_output = array(
         'name' => $name,
-        'source' => 'composer',
+        'source' => 'packagist',  // TODO any way to tell if it came from another repository?
         'path' => $argv[1],
         'installed' => array('version' => $installed_version),
         'available' => $available

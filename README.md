@@ -8,7 +8,7 @@
 
 A [dependencies.io](https://www.dependencies.io)
 [collector](https://www.dependencies.io/docs/collectors/)
-uses `composer install` to collect php dependencies.
+that uses `composer install` to collect php dependencies.
 
 ## Usage
 
@@ -17,13 +17,14 @@ uses `composer install` to collect php dependencies.
 ```yaml
 collectors:
 - type: php-composer
-  path: /  # path with composer.json (and optionally composer.lock)
+  path: /  # path with composer.json (and composer.lock)
   actors:
   - ...
 ```
 
 ### Works well with
 
+- [php-composer actor](https://www.dependencies.io/docs/actors/php-composer/) ([GitHub repo](https://github.com/dependencies-io/actor-php-composer/))
 - [repo-issue actor](https://www.dependencies.io/docs/actors/repo-issue/) ([GitHub repo](https://github.com/dependencies-io/actor-repo-issue/))
 
 

@@ -3,7 +3,7 @@
         {
             "name": "monolog/monolog",
             "source": "packagist",
-            "path": "/",
+            "path": "app",
             "installed": {
                 "version": "1.0.2"
             },
@@ -133,7 +133,7 @@
         {
             "name": "phpunit/phpunit",
             "source": "packagist",
-            "path": "/",
+            "path": "app",
             "installed": {
                 "version": "3.7.38"
             },

@@ -1,8 +1,10 @@
 <?php
 
-$collected = array();
+function path_join($base, $path) {
+    return rtrim($base, '/') . '/' . ltrim($path, '/');
+}
 
-$schema_version = function($version) {
+function schema_version($version) {
     // the currently installed version has an * in front
     if(substr( $version, 0, 2 ) === "* ") {
         $version = substr( $version, 2 );
@@ -10,14 +12,28 @@ $schema_version = function($version) {
 
     // dependencies.io schema expects it in this form
     return array('version' => $version);
-};
+}
+
+$collected = array();
 
 // get list of everything installed currently
 $show_output = shell_exec('composer show --latest --format=json');
 $installed = json_decode($show_output, true);
 
+$composer_json = json_decode(file_get_contents(path_join(path_join('/repo', $argv[1]), 'composer.json')), true);
+$composer_require = array_key_exists('require', $composer_json) ? $composer_json['require'] : array();
+$composer_require_dev = array_key_exists('require-dev', $composer_json) ? $composer_json['require-dev'] : array();
+
 foreach ($installed['installed'] as $package) {
     $name = $package['name'];
+
+    // we only want direct dependencies, not their dependencies
+    if (!array_key_exists($name, $composer_require) && !array_key_exists($name, $composer_require_dev)) {
+        continue;
+    }
+
+    echo "Collecting $name";
+
     $installed_version = $package['version'];
 
     $info_output = shell_exec("composer show $name --all");
@@ -26,7 +42,7 @@ foreach ($installed['installed'] as $package) {
     if (count($matches) > 1) {
         $versions_string = $matches[1];
         $versions = explode(', ', $versions_string);
-        $available = array_map($schema_version, $versions);
+        $available = array_map(schema_version, $versions);
     } else {
         $available = array();
     }

@@ -8,3 +8,10 @@ cases:
   dependencies_json: test/dependencies.json
   user_config:
     path: /
+
+- name: Subdirectory test
+  dockerfile: Dockerfile
+  repo_contents: test/repo_with_subdirectory
+  dependencies_json: test/dependencies_subdirectory.json
+  user_config:
+    path: app

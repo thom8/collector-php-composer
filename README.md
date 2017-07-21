@@ -12,7 +12,7 @@ that uses `composer install` to collect php dependencies.
 
 ## Usage
 
-### .dependencies.yml
+### dependencies.yml
 
 ```yaml
 collectors:

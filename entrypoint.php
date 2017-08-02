@@ -16,25 +16,19 @@ function schema_version($version) {
 
 $collected = array();
 
-// get list of everything installed currently
-$show_output = shell_exec('composer show --latest --format=json');
-$installed = json_decode($show_output, true);
-
 $composer_json = json_decode(file_get_contents(path_join(path_join('/repo', $argv[1]), 'composer.json')), true);
 $composer_require = array_key_exists('require', $composer_json) ? $composer_json['require'] : array();
 $composer_require_dev = array_key_exists('require-dev', $composer_json) ? $composer_json['require-dev'] : array();
 
-foreach ($installed['installed'] as $package) {
-    $name = $package['name'];
+$composer_lock = json_decode(file_get_contents(path_join(path_join('/repo', $argv[1]), 'composer.lock')), true);
+$composer_packages = array_key_exists('packages', $composer_lock) ? $composer_lock['packages'] : array();
+$composer_packages_dev = array_key_exists('packages-dev', $composer_lock) ? $composer_lock['packages-dev'] : array();
 
-    // we only want direct dependencies, not their dependencies
-    if (!array_key_exists($name, $composer_require) && !array_key_exists($name, $composer_require_dev)) {
-        continue;
-    }
+$all_packages = array_merge($composer_packages, $composer_packages_dev);
+$all_requirements = array_merge($composer_require, $composer_require_dev);
 
-    echo "Collecting $name";
-
-    $installed_version = $package['version'];
+foreach ($all_requirements as $name => $spec) {
+    echo "Collecting $name\n";
 
     $info_output = shell_exec("composer show $name --all");
     preg_match('/^versions : (.*)$/m', $info_output, $matches);
@@ -44,8 +38,16 @@ foreach ($installed['installed'] as $package) {
         $versions = explode(', ', $versions_string);
         $available = array_map(schema_version, $versions);
     } else {
-        $available = array();
+        throw new Exception("No available versions found for \"$name\"");
     }
+
+    echo "Finding installed version of \"$name\" based on composer.lock\n";
+
+    $installed_version = array_filter($all_packages, function($package) use($name) {
+        return strtolower($package['name']) == strtolower($name);
+    });
+    // indexes might be thrown off
+    $installed_version = array_values($installed_version)[0]['version'];
 
     $schema_output = array(
         'name' => $name,

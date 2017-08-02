@@ -14,9 +14,8 @@ RUN adduser -D -u 9000 app && \
 # run everything from here on as non-root
 USER app
 
-ADD entrypoint.sh /usr/src/collector
-ADD collect.php /usr/src/collector
+ADD entrypoint.php /usr/src/collector
 
 WORKDIR /repo
 
-ENTRYPOINT ["/usr/src/collector/entrypoint.sh"]
+ENTRYPOINT ["php", "/usr/src/collector/entrypoint.php"]

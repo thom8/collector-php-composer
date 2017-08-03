@@ -30,6 +30,11 @@ $all_requirements = array_merge($composer_require, $composer_require_dev);
 foreach ($all_requirements as $name => $spec) {
     echo "Collecting $name\n";
 
+    if ($name == 'php') {
+        echo "Skipping \"php\" for now. See https://github.com/dependencies-io/collector-php-composer/issues/5\n";
+        continue;
+    }
+
     $info_output = shell_exec("composer show $name --all");
     preg_match('/^versions : (.*)$/m', $info_output, $matches);
 

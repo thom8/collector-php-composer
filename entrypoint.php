@@ -28,11 +28,11 @@ $all_packages = array_merge($composer_packages, $composer_packages_dev);
 $all_requirements = array_merge($composer_require, $composer_require_dev);
 
 foreach ($all_requirements as $name => $spec) {
-    echo "Collecting $name\n";
-
-    if ($name == 'php') {
-        echo "Skipping \"php\" for now. See https://github.com/dependencies-io/collector-php-composer/issues/5\n";
+    if ($name == 'php' || $name == 'hhvm' || substr($name, 0, 4) === 'ext-' || substr($name, 0, 4) === 'lib-') {
+        echo "Skipping platform package: \"$name\".\n";
         continue;
+    } else {
+        echo "Collecting $name\n";
     }
 
     $info_output = shell_exec("composer show $name --all");

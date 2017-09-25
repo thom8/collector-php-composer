@@ -28,7 +28,7 @@ $all_packages = array_merge($composer_packages, $composer_packages_dev);
 $all_requirements = array_merge($composer_require, $composer_require_dev);
 
 foreach ($all_requirements as $name => $spec) {
-    if ($name == 'php' || $name == 'hhvm' || substr($name, 0, 4) === 'ext-' || substr($name, 0, 4) === 'lib-') {
+    if ($name == 'php' || $name == 'hhvm' || $name == 'composer-plugin-api' || substr($name, 0, 4) === 'ext-' || substr($name, 0, 4) === 'lib-') {
         echo "Skipping platform package: \"$name\".\n";
         continue;
     } else {
